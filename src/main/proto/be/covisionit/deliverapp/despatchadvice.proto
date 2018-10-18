@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+option java_package = "be.covisionit.deliverapp.proto";
+option java_outer_classname = "DespatchAdviceDocument";
+option java_multiple_files = true;
+
+import "google/protobuf/timestamp.proto";
+
+message Address {
+    string ID = 1;
+    string StreetName = 2;
+    string AdditionalStreetName = 3;
+    string CityName = 4;
+    string PostalZone = 5;
+    string CountrySubentity = 6;
+    string Country = 7;
+}
+
+message Consignment {
+    string ID = 1;
+    string Information = 2;
+    Party CarrierParty = 3;
+}
+
+message Contact {
+    string Name = 1;
+    string Telephone = 2;
+    string Telefax = 3;
+    string ElectronicMail = 4;
+}
+
+message Delivery {
+    string TrackingID = 1;
+    Despatch Despatch = 2;
+    Location DeliveryLocation = 3;
+}
+
+message DeliveryCustomerParty {
+    Party Party = 1;
+    Contact DeliveryContact = 2;
+}
+
+message Despatch {
+    google.protobuf.Timestamp ActualDespatchTimestamp = 2;
+    Address DespatchAddress = 3;
+}
+
+message DespatchAdvice {
+    string ID = 1;
+    repeated string Note = 2;
+    OrderReference OrderReference = 3;
+    DespatchSupplierParty DespatchSupplierParty = 4;
+    DeliveryCustomerParty DeliveryCustomerParty = 5;
+    Shipment Shipment = 6;
+    repeated DespatchLine DespatchLine = 7;
+    DespatchAdviceStatus Status = 8;
+}
+
+message DespatchAdviceStatus {
+    enum DespatchAdviceStatusName {
+        ACCEPTED = 0;
+        REFUSED = 1;
+        REMARKS = 2;
+    }
+    DespatchAdviceStatusName Name = 1;
+    string Remarks = 2;
+}
+
+message DespatchLine {
+    string ID = 1;
+    string Note = 2;
+    double DeliveredQuantity = 3;
+    string DeliveredQuantityUnitCode = 4;
+    Item Item = 5;
+}
+
+message DespatchSupplierParty {
+    Party Party = 1;
+}
+
+message DocumentReference {
+    string ID = 1;
+    string DocumentType = 2;
+}
+
+message Item {
+    string Description = 1;
+}
+
+message Location {
+    LocationCoordinate LocationCoordinate = 1;
+}
+
+message LocationCoordinate {
+    double LatitudeDegreesMeasure = 1;
+    double LongitudeDegreesMeasure = 2;
+}
+
+message OrderReference {
+    string ID = 1;
+}
+
+message Party {
+    PartyIdentification PartyIdentification = 1;
+    PartyName PartyName = 2;
+    Address PostalAddress = 3;
+    Contact Contact = 4;
+    Person Person = 5;
+}
+
+message PartyIdentification {
+    string ID = 1;
+}
+
+message PartyName {
+    string Name = 1;
+}
+
+message Person {
+    DocumentReference IdentityDocumentReference = 1;
+}
+
+message Shipment {
+    string ID = 1;
+    Consignment Consignment = 2;
+    Delivery Delivery = 3;
+}
