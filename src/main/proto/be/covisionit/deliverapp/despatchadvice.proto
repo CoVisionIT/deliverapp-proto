@@ -40,6 +40,29 @@ message DeliveryCustomerParty {
     Contact DeliveryContact = 2;
 }
 
+message DeliveryNoteReceptionPreferences {
+    enum DeliveryNoteFormat {
+        JSON = 0;
+        PEPPOL = 1;
+        UBL = 2;
+    }
+
+    message EmailPreferences {
+        bool active = 1;
+        DeliveryNoteFormat format = 2;
+        string emailAddress = 3;
+    }
+
+    message EndpointPreferences {
+        bool active = 1;
+        DeliveryNoteFormat format = 2;
+        string url = 3;
+    }
+
+    EmailPreferences emailPreferences = 1;
+    EndpointPreferences endpointPreferences = 2;
+}
+
 message Despatch {
     google.protobuf.Timestamp ActualDespatchTimestamp = 2;
     Address DespatchAddress = 3;
@@ -76,6 +99,7 @@ message DespatchLine {
 
 message DespatchSupplierParty {
     Party Party = 1;
+    DeliveryNoteReceptionPreferences deliveryNoteReceptionPreferences = 2;
 }
 
 message DocumentReference {
