@@ -8,13 +8,13 @@ For the Java library: add the deliverapp-proto repository and the deliverapp-pro
     <repositories>
         <repository>
             <id>deliverapp-proto</id>
-            <url>https://raw.githubusercontent.com/CoVisionIT/deliverapp-proto/master/artifacts</url>
+            <url>https://raw.githubusercontent.com/CoVisionIT/deliverapp-proto/java6/artifacts</url>
         </repository>
     </repositories>
 
     <dependency>
         <groupId>be.covisionit</groupId>
-        <artifactId>deliverapp-proto</artifactId>
+        <artifactId>deliverapp-proto-java6</artifactId>
         <version>1.0.1</version>
     </dependency>
 
@@ -24,20 +24,22 @@ to your project and configure [Protocol buffers](https://developers.google.com/p
 #### Create the contents for a QR code
 
     import be.covisionit.deliverapp.proto.DespatchAdvice;
-    import java.nio.charset.StandardCharsets;
+    import java.nio.charset.Charset;
 
     DespatchAdvice despatchAdvice = DespatchAdvice.newBuilder().setID("ID123").build();
-    String qrString = new String(despatchAdvice.toByteArray(), StandardCharsets.ISO_8859_1);
+    String qrString = new String(despatchAdvice.toByteArray(), Charset.forName("ISO-8859-1"));
     
     
 #### Create a QR code image from the protobuf string
 
 For example with the ZXing library:
 
+    public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
+
     public static Image toImage(String qrString, int size) throws WriterException {
         QRCodeWriter writer = new QRCodeWriter();
-        Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.CHARACTER_SET, StandardCharsets.ISO_8859_1);
+        Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
+        hints.put(EncodeHintType.CHARACTER_SET, ISO_8859_1.name());
         BitMatrix bitMatrix = writer.encode(qrString, BarcodeFormat.QR_CODE, size, size, hints);
 
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_USHORT_565_RGB);
