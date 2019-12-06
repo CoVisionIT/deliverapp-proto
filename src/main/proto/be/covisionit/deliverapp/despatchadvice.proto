@@ -109,6 +109,7 @@ message DocumentReference {
 
 message Item {
     string Description = 1;
+    google.protobuf.Timestamp ManufactureDate = 2;
 }
 
 message Location {

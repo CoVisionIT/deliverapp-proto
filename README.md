@@ -15,7 +15,7 @@ For the Java library: add the deliverapp-proto repository and the deliverapp-pro
     <dependency>
         <groupId>be.covisionit</groupId>
         <artifactId>deliverapp-proto-java6</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </dependency>
 
 Alternatively, for C++, C#, GO or Python, copy the [protocol file](src/main/proto/be/covisionit/deliverapp/despatchadvice.proto) 
